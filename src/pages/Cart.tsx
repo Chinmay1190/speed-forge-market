@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag } from 'lucide-react';
@@ -17,21 +16,6 @@ const Cart = () => {
       currency: 'INR',
       maximumFractionDigits: 0,
     }).format(price);
-  };
-
-  const handleCheckout = () => {
-    if (items.length === 0) {
-      toast.error('Your cart is empty');
-      return;
-    }
-    
-    // Simulate payment process
-    toast.success('Redirecting to checkout...');
-    setTimeout(() => {
-      // In a real app, this would redirect to a payment gateway
-      toast.success('Order placed successfully! 🎉');
-      clearCart();
-    }, 2000);
   };
 
   if (items.length === 0) {
@@ -197,12 +181,10 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <Button 
-                  className="w-full mb-4" 
-                  size="lg"
-                  onClick={handleCheckout}
-                >
-                  Proceed to Checkout
+                <Button asChild className="w-full mb-4" size="lg">
+                  <Link to="/checkout">
+                    Proceed to Checkout
+                  </Link>
                 </Button>
 
                 <div className="text-xs text-muted-foreground space-y-2">
