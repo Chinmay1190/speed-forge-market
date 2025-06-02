@@ -1,26 +1,49 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star, ShoppingCart, Heart, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Product } from '@/data/products';
 import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 import { toast } from 'sonner';
 
 interface ProductCardProps {
   product: Product;
+  onCompare?: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onCompare }) => {
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product);
     toast.success(`${product.name} added to cart!`);
+  };
+
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+      toast.info(`${product.name} removed from wishlist`);
+    } else {
+      addToWishlist(product);
+      toast.success(`${product.name} added to wishlist!`);
+    }
+  };
+
+  const handleCompare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onCompare) {
+      onCompare(product);
+    }
   };
 
   const formatPrice = (price: number) => {
@@ -33,7 +56,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <Link to={`/product/${product.id}`}>
-      <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 animate-fade-in">
+      <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 animate-fade-in relative">
+        <div className="absolute top-4 right-4 z-10 flex flex-col space-y-2">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="bg-background/80 hover:bg-background"
+            onClick={handleWishlistToggle}
+          >
+            <Heart
+              className={`w-4 h-4 ${
+                isInWishlist(product.id) ? 'fill-red-500 text-red-500' : ''
+              }`}
+            />
+          </Button>
+          {onCompare && (
+            <Button
+              size="icon"
+              variant="ghost"
+              className="bg-background/80 hover:bg-background"
+              onClick={handleCompare}
+            >
+              <BarChart3 className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
+
         <div className="relative overflow-hidden">
           <img
             src={product.image}
@@ -47,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </Badge>
           )}
           {!product.inStock && (
-            <Badge variant="destructive" className="absolute top-4 right-4">
+            <Badge variant="destructive" className="absolute bottom-4 left-4">
               Out of Stock
             </Badge>
           )}

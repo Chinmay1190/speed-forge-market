@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, Search, Sun, Moon, Monitor } from 'lucide-react';
+import { ShoppingCart, Menu, Search, Sun, Moon, Monitor, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -18,12 +18,14 @@ import {
 } from '@/components/ui/sheet';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 import { brands } from '@/data/products';
 
 const Header = () => {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const { getTotalItems } = useCart();
+  const { items: wishlistItems } = useWishlist();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
@@ -141,6 +143,24 @@ const Header = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Wishlist */}
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="relative hidden sm:flex"
+              onClick={() => navigate('/wishlist')}
+            >
+              <Heart className="h-4 w-4" />
+              {wishlistItems.length > 0 && (
+                <Badge 
+                  variant="destructive" 
+                  className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                >
+                  {wishlistItems.length}
+                </Badge>
+              )}
+            </Button>
 
             {/* Cart */}
             <Button 

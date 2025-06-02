@@ -1,12 +1,13 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '@/components/HeroSection';
 import ProductCard from '@/components/ProductCard';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import FAQSection from '@/components/FAQSection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Star, Shield, Truck, CreditCard } from 'lucide-react';
+import { ArrowRight, Star, Shield, Truck, CreditCard, Phone, Award, Clock } from 'lucide-react';
 import { brands, getFeaturedProducts } from '@/data/products';
 
 const Index = () => {
@@ -47,11 +48,34 @@ const Index = () => {
             </Card>
             <Card className="text-center hover:shadow-lg transition-shadow animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <CardContent className="p-6">
-                <Star className="w-12 h-12 mx-auto mb-4 text-primary" />
-                <h3 className="font-semibold text-lg mb-2">Expert Support</h3>
-                <p className="text-muted-foreground">24/7 customer support and maintenance services</p>
+                <Phone className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <h3 className="font-semibold text-lg mb-2">24/7 Support</h3>
+                <p className="text-muted-foreground">Round-the-clock customer support and assistance</p>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Additional Trust Indicators */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="animate-fade-in">
+              <Award className="w-16 h-16 mx-auto mb-4 text-primary" />
+              <h3 className="text-xl font-bold mb-2">Certified Dealer</h3>
+              <p className="text-muted-foreground">Authorized dealer for all major superbike brands</p>
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <Clock className="w-16 h-16 mx-auto mb-4 text-primary" />
+              <h3 className="text-xl font-bold mb-2">Quick Processing</h3>
+              <p className="text-muted-foreground">Fast loan approval and documentation processing</p>
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <Shield className="w-16 h-16 mx-auto mb-4 text-primary" />
+              <h3 className="text-xl font-bold mb-2">Extended Warranty</h3>
+              <p className="text-muted-foreground">Extended warranty options and service packages</p>
+            </div>
           </div>
         </div>
       </section>
@@ -115,6 +139,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
       {/* Statistics Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
@@ -138,6 +165,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* Newsletter Section */}
       <section className="py-20 bg-primary">
