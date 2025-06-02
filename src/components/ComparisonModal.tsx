@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Vs } from 'lucide-react';
+import { X, ArrowLeftRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -48,7 +48,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({
         <DialogHeader>
           <DialogTitle className="flex items-center justify-center space-x-2">
             <span>Compare Bikes</span>
-            <Vs className="w-5 h-5" />
+            <ArrowLeftRight className="w-5 h-5" />
           </DialogTitle>
         </DialogHeader>
 
