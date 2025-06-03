@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '@/components/HeroSection';
@@ -14,13 +13,33 @@ import { brands, getFeaturedProducts } from '@/data/products';
 const Index = () => {
   const featuredProducts = getFeaturedProducts();
 
+  // Brand logo mapping
+  const brandLogos = {
+    'kawasaki': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=120&fit=crop',
+    'yamaha': 'https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=200&h=120&fit=crop',
+    'honda': 'https://images.unsplash.com/photo-1558623252-e0271863affb?w=200&h=120&fit=crop',
+    'ducati': 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=200&h=120&fit=crop',
+    'bmw': 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=200&h=120&fit=crop',
+    'harley-davidson': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=120&fit=crop',
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Features Section */}
-      <section className="py-20 bg-gradient-to-br from-muted/30 via-background to-muted/20 relative overflow-hidden">
+      {/* Features Section with Superbike Background */}
+      <section className="py-20 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-10">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop"
+            alt="Background Superbike"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-muted/80 via-background/90 to-muted/70"></div>
+
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="grid grid-cols-8 h-full">
@@ -179,9 +198,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Brands Section */}
-      <section className="py-20 bg-gradient-to-br from-muted/30 via-background to-muted/20">
-        <div className="container mx-auto px-4">
+      {/* Enhanced Brands Section with Logos */}
+      <section className="py-20 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-5">
+          <img
+            src="https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=1920&h=1080&fit=crop"
+            alt="Background Motorcycle"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-background to-muted/20"></div>
+
+        <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Premium <span className="gradient-text">Brands</span>
@@ -190,7 +219,7 @@ const Index = () => {
               Partner with the world's most prestigious motorcycle manufacturers
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {brands.map((brand, index) => (
               <Link
                 key={brand.id}
@@ -198,18 +227,35 @@ const Index = () => {
                 className="group animate-fade-in"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                <Card className="card-hover gradient-border text-center group-hover:glow-blue">
-                  <CardContent className="p-8">
-                    <div className="text-5xl mb-4 group-hover:scale-125 transition-transform">{brand.logo}</div>
-                    <h3 className="font-bold text-lg group-hover:text-primary transition-colors mb-2">
-                      {brand.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      {brand.country}
-                    </p>
-                    <Badge variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      Authorized
-                    </Badge>
+                <Card className="card-hover gradient-border text-center group-hover:glow-blue overflow-hidden">
+                  <CardContent className="p-0">
+                    {/* Brand Logo Image */}
+                    <div className="relative h-40 overflow-hidden">
+                      <img
+                        src={brandLogos[brand.id as keyof typeof brandLogos] || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=120&fit=crop'}
+                        alt={`${brand.name} motorcycle`}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                      
+                      {/* Brand Emoji/Logo Overlay */}
+                      <div className="absolute top-4 left-4 text-4xl bg-white/90 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center group-hover:scale-125 transition-transform">
+                        {brand.logo}
+                      </div>
+                    </div>
+                    
+                    {/* Brand Info */}
+                    <div className="p-6">
+                      <h3 className="font-bold text-xl group-hover:text-primary transition-colors mb-2">
+                        {brand.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        {brand.country}
+                      </p>
+                      <Badge variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        Authorized
+                      </Badge>
+                    </div>
                   </CardContent>
                 </Card>
               </Link>
