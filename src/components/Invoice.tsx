@@ -4,14 +4,20 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useCart } from '@/contexts/CartContext';
 
+interface CustomerDetails {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
 interface InvoiceProps {
   orderNumber: string;
-  customerDetails?: {
-    name: string;
-    email: string;
-    phone: string;
-    address: string;
-  };
+  customerDetails?: CustomerDetails;
 }
 
 const Invoice = ({ orderNumber, customerDetails }: InvoiceProps) => {
@@ -40,6 +46,13 @@ const Invoice = ({ orderNumber, customerDetails }: InvoiceProps) => {
     bankReference: `REF${Math.random().toString(36).substr(2, 12).toUpperCase()}`
   };
 
+  const customerName = customerDetails ? `${customerDetails.firstName} ${customerDetails.lastName}` : 'Valued Customer';
+  const customerEmail = customerDetails?.email || 'customer@email.com';
+  const customerPhone = customerDetails?.phone || '+91 XXXXX XXXXX';
+  const customerAddress = customerDetails ? 
+    `${customerDetails.address}, ${customerDetails.city}, ${customerDetails.state} - ${customerDetails.pincode}` : 
+    'Customer Address, City, State, PIN';
+
   return (
     <div className="invoice-container bg-white text-black p-8 max-w-4xl mx-auto font-sans" id="invoice">
       {/* Company Header */}
@@ -66,7 +79,7 @@ const Invoice = ({ orderNumber, customerDetails }: InvoiceProps) => {
                 <p><span className="font-semibold">Invoice No:</span> {orderNumber}</p>
                 <p><span className="font-semibold">Invoice Date:</span> {invoiceDate}</p>
                 <p><span className="font-semibold">Due Date:</span> {dueDate}</p>
-                <p><span className="font-semibold">Place of Supply:</span> Maharashtra</p>
+                <p><span className="font-semibold">Place of Supply:</span> {customerDetails?.state || 'Maharashtra'}</p>
               </div>
             </div>
           </div>
@@ -79,12 +92,12 @@ const Invoice = ({ orderNumber, customerDetails }: InvoiceProps) => {
         <div>
           <h3 className="text-lg font-semibold mb-3 text-gray-800 border-b border-gray-300 pb-1">Bill To:</h3>
           <div className="bg-gray-50 p-4 rounded-lg border">
-            <p className="font-semibold text-lg mb-2">{customerDetails?.name || 'Valued Customer'}</p>
-            <p className="text-gray-700">{customerDetails?.email || 'customer@email.com'}</p>
-            <p className="text-gray-700">{customerDetails?.phone || '+91 XXXXX XXXXX'}</p>
+            <p className="font-semibold text-lg mb-2">{customerName}</p>
+            <p className="text-gray-700">{customerEmail}</p>
+            <p className="text-gray-700">{customerPhone}</p>
             <div className="mt-3">
               <p className="font-medium text-gray-800">Billing Address:</p>
-              <p className="text-gray-700">{customerDetails?.address || 'Customer Address, City, State, PIN'}</p>
+              <p className="text-gray-700">{customerAddress}</p>
             </div>
           </div>
         </div>
@@ -93,10 +106,10 @@ const Invoice = ({ orderNumber, customerDetails }: InvoiceProps) => {
         <div>
           <h3 className="text-lg font-semibold mb-3 text-gray-800 border-b border-gray-300 pb-1">Ship To:</h3>
           <div className="bg-gray-50 p-4 rounded-lg border">
-            <p className="font-semibold text-lg mb-2">{customerDetails?.name || 'Valued Customer'}</p>
+            <p className="font-semibold text-lg mb-2">{customerName}</p>
             <div className="mt-3">
               <p className="font-medium text-gray-800">Shipping Address:</p>
-              <p className="text-gray-700">{customerDetails?.address || 'Same as billing address'}</p>
+              <p className="text-gray-700">{customerAddress}</p>
             </div>
             <div className="mt-3 text-sm">
               <p><span className="font-medium">Expected Delivery:</span> 7-14 business days</p>
@@ -130,7 +143,7 @@ const Invoice = ({ orderNumber, customerDetails }: InvoiceProps) => {
                     <div>
                       <p className="font-semibold text-gray-900">{item.name}</p>
                       <p className="text-sm text-gray-600">Brand: {item.brand}</p>
-                      <p className="text-xs text-gray-500 mt-1">Premium Superbike with advanced features</p>
+                      <p className="text-xs text-gray-500 mt-1">Premium Superbike - {item.category}</p>
                     </div>
                   </TableCell>
                   <TableCell className="text-center border-r text-sm">8711</TableCell>

@@ -41,12 +41,17 @@ const PaymentSuccess = () => {
     }
   ];
 
-  // Sample customer details - in a real app, this would come from the checkout form
+  // Get customer details from localStorage or form data
+  // In a real app, this would come from the checkout form state or be passed via navigation state
   const customerDetails = {
-    name: 'John Doe',
+    firstName: 'John',
+    lastName: 'Doe',
     email: 'john.doe@email.com',
     phone: '+91 98765 43210',
-    address: '123 Main Street, Mumbai, Maharashtra 400001'
+    address: '123 Main Street',
+    city: 'Mumbai',
+    state: 'Maharashtra',
+    pincode: '400001'
   };
 
   return (

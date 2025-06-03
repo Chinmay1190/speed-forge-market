@@ -6,16 +6,22 @@ import { Download, Printer, X } from 'lucide-react';
 import Invoice from './Invoice';
 import { useReactToPrint } from 'react-to-print';
 
+interface CustomerDetails {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
 interface InvoiceModalProps {
   isOpen: boolean;
   onClose: () => void;
   orderNumber: string;
-  customerDetails?: {
-    name: string;
-    email: string;
-    phone: string;
-    address: string;
-  };
+  customerDetails?: CustomerDetails;
 }
 
 const InvoiceModal = ({ isOpen, onClose, orderNumber, customerDetails }: InvoiceModalProps) => {
