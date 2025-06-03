@@ -1,6 +1,6 @@
 
 import React, { useRef } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Download, Printer, X } from 'lucide-react';
 import Invoice from './Invoice';
@@ -38,7 +38,12 @@ const InvoiceModal = ({ isOpen, onClose, orderNumber, customerDetails }: Invoice
       <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex justify-between items-center">
-            <DialogTitle>Invoice #{orderNumber}</DialogTitle>
+            <div>
+              <DialogTitle>Invoice #{orderNumber}</DialogTitle>
+              <DialogDescription>
+                Detailed invoice for your superbike purchase with complete payment and delivery information.
+              </DialogDescription>
+            </div>
             <div className="flex space-x-2">
               <Button onClick={handleDownload} size="sm" variant="outline">
                 <Download className="w-4 h-4 mr-2" />
