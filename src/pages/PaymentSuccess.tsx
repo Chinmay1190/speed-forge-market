@@ -1,13 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Gift, Truck, Star, Home, ShoppingBag, Download } from 'lucide-react';
+import { Check, Gift, Truck, Star, Home, ShoppingBag, Download, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import InvoiceModal from '@/components/InvoiceModal';
 
 const PaymentSuccess = () => {
   const [showConfetti, setShowConfetti] = useState(true);
+  const [showInvoice, setShowInvoice] = useState(false);
   const [orderNumber] = useState(() => 
     'SB' + Math.random().toString(36).substr(2, 9).toUpperCase()
   );
@@ -38,6 +40,14 @@ const PaymentSuccess = () => {
       delay: '0.6s'
     }
   ];
+
+  // Sample customer details - in a real app, this would come from the checkout form
+  const customerDetails = {
+    name: 'John Doe',
+    email: 'john.doe@email.com',
+    phone: '+91 98765 43210',
+    address: '123 Main Street, Mumbai, Maharashtra 400001'
+  };
 
   return (
     <div className="min-h-screen py-8 relative overflow-hidden">
@@ -148,7 +158,12 @@ const PaymentSuccess = () => {
               </Link>
             </Button>
             
-            <Button variant="outline" size="lg" className="min-w-[200px]">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="min-w-[200px]"
+              onClick={() => setShowInvoice(true)}
+            >
               <Download className="w-4 h-4 mr-2" />
               Download Invoice
             </Button>
@@ -182,6 +197,14 @@ const PaymentSuccess = () => {
           </Card>
         </div>
       </div>
+
+      {/* Invoice Modal */}
+      <InvoiceModal
+        isOpen={showInvoice}
+        onClose={() => setShowInvoice(false)}
+        orderNumber={orderNumber}
+        customerDetails={customerDetails}
+      />
     </div>
   );
 };
