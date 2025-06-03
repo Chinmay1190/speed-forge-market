@@ -22,21 +22,12 @@ const InvoiceModal = ({ isOpen, onClose, orderNumber, customerDetails }: Invoice
   const invoiceRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
-    content: () => invoiceRef.current,
+    contentRef: invoiceRef,
     documentTitle: `Invoice-${orderNumber}`,
   });
 
   const handleDownload = () => {
     if (invoiceRef.current) {
-      const element = invoiceRef.current;
-      const opt = {
-        margin: 0.5,
-        filename: `Invoice-${orderNumber}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
-      
       // Simple download functionality - in a real app, you'd use html2pdf or similar
       window.print();
     }

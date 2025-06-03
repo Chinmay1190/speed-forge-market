@@ -86,7 +86,7 @@ const Invoice = ({ orderNumber, customerDetails }: InvoiceProps) => {
                 <TableCell>
                   <div>
                     <p className="font-medium">{item.name}</p>
-                    <p className="text-sm text-gray-500">{item.brand} - {item.engine}</p>
+                    <p className="text-sm text-gray-500">{item.brand}</p>
                   </div>
                 </TableCell>
                 <TableCell className="text-center">{item.quantity}</TableCell>
